@@ -8,7 +8,7 @@ import mysql.connector
 conexao = mysql.connector.connect(
     host="localhost",
     user="root",
-    password="01t0M31@"
+    password="18062010"
 )
 
 cursor = conexao.cursor()
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS residencia (
     proprietario VARCHAR(255),
     quantidade_de_residentes INT,
     endereco VARCHAR(255),
-    FOREIGN KEY (id_residencia) REFERENCES residencia(id) ON DELETE CASCADE
+    FOREIGN KEY (fk_id_usuario) REFERENCES usuario(id) ON DELETE CASCADE
 )
 """)
 
