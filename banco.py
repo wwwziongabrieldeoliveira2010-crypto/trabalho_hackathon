@@ -8,7 +8,7 @@ import mysql.connector
 conexao = mysql.connector.connect(
     host="localhost",
     user="root",
-    password="SUA_SENHA"
+    password="01t0M31@"
 )
 
 cursor = conexao.cursor()
@@ -32,8 +32,7 @@ USE sustentavel
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS usuario (
     id INT,
-    nome VARCHAR(255),
-
+    nome VARCHAR(255)
 )
 """)
 
@@ -42,10 +41,12 @@ CREATE TABLE IF NOT EXISTS usuario (
 
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS residencia (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_residencia INT AUTO_INCREMENT PRIMARY KEY,
+    fk_id_usuario int,
     proprietario VARCHAR(255),
     quantidade_de_residentes INT,
-    endereco VARCHAR(255)
+    endereco VARCHAR(255),
+    FOREIGN KEY (id_residencia) REFERENCES residencia(id) ON DELETE CASCADE
 )
 """)
 
@@ -53,13 +54,11 @@ CREATE TABLE IF NOT EXISTS residencia (
 
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS energia (
-    id INT,
     id_residencia INT,
     quilowatts_por_hora DECIMAL(10, 2),
     preco_do_quilowatt_por_hora DECIMAL(10, 2),
-
     FOREIGN KEY (id_residencia)
-    REFERENCES residencia(id)
+    REFERENCES residencia(id_residencia)
     ON DELETE CASCADE
 )
 """)
@@ -67,14 +66,12 @@ CREATE TABLE IF NOT EXISTS energia (
 
 
 cursor.execute("""
-CREATE TABLE IF NOT EXISTS agua (
-    id INT,
+CREATE TABLE IF NOT EXISTS energia (
     id_residencia INT,
     litros_de_agua_usados DECIMAL(10, 2),
     preco_por_litro DECIMAL(10, 2),
-
     FOREIGN KEY (id_residencia)
-    REFERENCES residencia(id)
+    REFERENCES residencia(id_residencia)
     ON DELETE CASCADE
 )
 """)
@@ -84,13 +81,11 @@ CREATE TABLE IF NOT EXISTS agua (
 
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS lixo (
-    id INT,
     id_residencia INT,
     quilo_de_lixo DECIMAL(10, 2),
     multa_por_quilo_de_lixo DECIMAL(10, 2),
-
     FOREIGN KEY (id_residencia)
-    REFERENCES residencia(id)
+    REFERENCES residencia(id_residencia)
     ON DELETE CASCADE
 )
 """)
