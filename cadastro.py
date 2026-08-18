@@ -1,11 +1,12 @@
-from utilitario import conectar
+from utilitario import *
 
 
 def cadastro_usuario():
 
     nome = input("Digite o nome do usuário: ")
 
-    
+    if vali_txt(nome):
+        return True
 
     conexao = conectar()
     cursor = conexao.cursor()
@@ -25,3 +26,59 @@ def cadastro_usuario():
 
     cursor.close()
     conexao.close()
+
+
+
+
+def cadastrar_residencia():
+
+    proprietario = input("Digite o nome do proprietário: ")
+    if vali_txt(proprietario):
+        return True
+
+    while True:
+        quantidade_residentes = input(
+            "Digite a quantidade de residentes: "
+        )
+
+        try:
+            quantidade_residentes = int(quantidade_residentes)
+
+            if quantidade_residentes > 0:
+                break
+
+            print("A quantidade deve ser maior que 0.")
+
+        except ValueError:
+            print("Digite um número válido.")
+
+    endereco = input("Digite o endereço da residência: ")
+    if vali_txt(endereco):
+        return True
+
+    
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    sql = """
+    INSERT INTO residencia
+    (proprietario, quantidade_de_residentes, endereco)
+    VALUES (%s, %s, %s)
+    """
+
+    valores = (
+        proprietario,
+        quantidade_residentes,
+        endereco
+    )
+
+    cursor.execute(sql, valores)
+
+    conexao.commit()
+
+    print("Residência cadastrada com sucesso!")
+
+    cursor.close()
+    conexao.close()
+
+
