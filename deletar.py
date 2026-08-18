@@ -32,13 +32,10 @@ def deletar_residencia():
 
     id_residencia = input("Digite o ID da residência que deseja deletar: ")
 
-    if 
-
-
     conexao = conectar()
     cursor = conexao.cursor()
 
-    # Verifica se a residência existe
+
     cursor.execute("""
         SELECT id_residencia
         FROM residencia
