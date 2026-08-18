@@ -1,3 +1,4 @@
+from datetime import datetime
 import mysql.connector
 db = mysql.connector.connect(
     host="localhost",
@@ -66,3 +67,30 @@ def validar_inteiro(valor):
 
     except ValueError:
         return False
+
+
+
+def registrar_logs(familia, acao):
+
+    db = conectar()
+    cursor = db.cursor()
+
+    query = """
+    INSERT INTO logs
+    (familia,acao,data_hora) 
+    VAULES (%s,%s,%s)
+    """
+    cursor.execute(
+        query,
+        (
+            familia,
+            acao,
+            datetime.now()
+
+        )
+    )
+
+    db.commit
+
+    cursor.close()
+    db.close 
