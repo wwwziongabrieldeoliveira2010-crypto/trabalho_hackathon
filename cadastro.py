@@ -39,8 +39,8 @@ def cadastrar_residencia():
             try:
                 quantidade_residentes = int(quantidade_residentes)
 
-                if quantidade_residentes < 0:
-                    break
+                if quantidade_residentes <= 0:
+                    continue
 
                 print("A quantidade deve ser maior que 0.")
 
