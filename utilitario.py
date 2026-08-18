@@ -13,7 +13,7 @@ def conectar():
         host="localhost",
         user="root",
         password="18062010",
-        database="fazendeiro"
+        database="sustentavel"
     )
     
 
@@ -94,3 +94,15 @@ def registrar_logs(fk_id_familia, acao):
 
     cursor.close()
     db.close 
+
+def ChecarUsuarios():
+    while True:
+        conn = conectar()
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM usuario")
+        resultado = cursor.fetchall()
+        if not resultado:
+            return "Nenhum usuario encontrado."
+            break
+        else:
+            continue
