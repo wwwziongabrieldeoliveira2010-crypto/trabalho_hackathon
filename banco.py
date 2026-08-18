@@ -26,18 +26,12 @@ cursor.execute("""
 USE sustentavel
 """)
 
-
-
-
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS usuario (
-    id INT,
+    id INT AUTO_INCREMENT primary key,
     nome VARCHAR(255)
 )
 """)
-
-
-
 
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS residencia (
@@ -50,8 +44,6 @@ CREATE TABLE IF NOT EXISTS residencia (
 )
 """)
 
-
-
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS energia (
     id_residencia INT,
@@ -62,8 +54,6 @@ CREATE TABLE IF NOT EXISTS energia (
     ON DELETE CASCADE
 )
 """)
-
-
 
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS energia (
