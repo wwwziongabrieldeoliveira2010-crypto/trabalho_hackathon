@@ -30,8 +30,9 @@ def cadastro_familia():
         else:
          print("Erro: o endereço não pode estar vazio.")
 
-    
-    query = """INSERT INTO familia (sobrenome), (residentes), (endereço) VAULES (%s),(%s),(%s)"""
+    conexao = conectar()
+    cursor = conexao.cursor()
+    query = """INSERT INTO familia (sobrenome,  quantidade_de_membros, endereco) VALUES (%s,%s,%s)"""
 
     try:
 
@@ -43,8 +44,9 @@ def cadastro_familia():
                 endereco
             )
         )
-        db.commit()
-
+        conexao.commit()
+        cursor.close()
+        conexao.close()
     except mysql.connector.Error as err:
         print(f"Erro: {err}")
 

@@ -10,11 +10,23 @@ db = mysql.connector.connect(
 cursor = db.cursor()
 
 cursor.execute("CREATE DATABASE IF NOT EXISTS fazendeiro")
+
 cursor.execute("USE fazendeiro")
 
-cursor.execute("""create table if not exists graos (
- id_grao int AUTO_INCREMENT primary key,
- tipo varchar (255) UNIQUE NOT NULL);""")
+
+# ==========================================
+# TABELA DE GRÃOS
+# ==========================================
+
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS graos (
+    id_grao INT AUTO_INCREMENT PRIMARY KEY,
+    tipo VARCHAR(255) UNIQUE NOT NULL
+)
+""")
+
+
+# Grãos disponíveis no sistema
 
 tipo = [
     ("Arroz",),
@@ -23,32 +35,79 @@ tipo = [
     ("Trigo",),
     ("Soja",)
 ]
-cursor.executemany("""INSERT IGNORE INTO graos (tipo) VALUES (%s)""", tipo)
 
-cursor.execute("""CREATE TABLE IF NOT EXISTS estoque (
- id_estoque int primary key,
- fk_id_grao int,
- quantidade float,
- FOREIGN KEY (fk_id_grao) REFERENCES graos(id_grao) ON DELETE CASCADE
- );""")
+cursor.executemany("""
+INSERT IGNORE INTO graos (tipo)
+VALUES (%s)
+""", tipo)
 
-cursor.execute("""create table if not exists logs (
- id_log int,
- fk_id_grao int,
- quantidade float,
- acao varchar(255),
- data_hora DATETIME,
- FOREIGN KEY (fk_id_grao) REFERENCES graos(id_grao) ON DELETE CASCADE
- );""")
 
-cursor.execute("""CREATE TABLE IF NOT EXISTS familia (
- id_usuario int primary key,
- fk_id_estoque int,
- sobrenome VARCHAR (255),
- quantidadeDeMembros int,
- endereco VARCHAR (255),
- FOREIGN KEY (fk_id_estoque) REFERENCES estoque(id_estoque) ON DELETE CASCADE
- );""")
+# ==========================================
+# TABELA FAMÍLIA
+# ==========================================
+
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS familia (
+    id_familia INT AUTO_INCREMENT PRIMARY KEY,
+    sobrenome VARCHAR(255) NOT NULL,
+    quantidade_de_membros INT NOT NULL,
+    endereco VARCHAR(255) NOT NULL
+)
+""")
+
+
+# ==========================================
+# TABELA ESTOQUE
+# ==========================================
+
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS estoque (
+    id_estoque INT AUTO_INCREMENT PRIMARY KEY,
+
+    fk_id_familia INT NOT NULL,
+    fk_id_grao INT NOT NULL,
+
+    quantidade DECIMAL(12,2) NOT NULL DEFAULT 0,
+
+    FOREIGN KEY (fk_id_familia)
+        REFERENCES familia(id_familia)
+        ON DELETE CASCADE,
+
+    FOREIGN KEY (fk_id_grao)
+        REFERENCES graos(id_grao)
+        ON DELETE CASCADE,
+
+    UNIQUE (fk_id_familia, fk_id_grao)
+)
+""")
+
+
+# ==========================================
+# TABELA LOGS
+# ==========================================
+
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS logs (
+    id_log INT AUTO_INCREMENT PRIMARY KEY,
+
+    fk_id_familia INT NOT NULL,
+    fk_id_grao INT,
+
+    quantidade DECIMAL(12,2),
+
+    acao VARCHAR(255) NOT NULL,
+
+    data_hora DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (fk_id_familia)
+        REFERENCES familia(id_familia)
+        ON DELETE CASCADE,
+
+    FOREIGN KEY (fk_id_grao)
+        REFERENCES graos(id_grao)
+        ON DELETE SET NULL
+)
+""")
 
 
 def conectar():
