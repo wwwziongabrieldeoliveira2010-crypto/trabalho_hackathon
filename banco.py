@@ -1,122 +1,110 @@
 import mysql.connector
-from datetime import datetime
 
-db = mysql.connector.connect(
+
+# ==========================================
+# CONEXÃO COM O MYSQL
+# ==========================================
+
+conexao = mysql.connector.connect(
     host="localhost",
     user="root",
-    password="18062010"
-    )
+    password="SUA_SENHA"
+)
 
-cursor = db.cursor()
-
-cursor.execute("CREATE DATABASE IF NOT EXISTS fazendeiro")
-
-cursor.execute("USE fazendeiro")
+cursor = conexao.cursor()
 
 
 # ==========================================
-# TABELA DE GRÃOS
+# CRIAR BANCO DE DADOS
 # ==========================================
 
 cursor.execute("""
-CREATE TABLE IF NOT EXISTS graos (
-    id_grao INT AUTO_INCREMENT PRIMARY KEY,
-    tipo VARCHAR(255) UNIQUE NOT NULL
+CREATE DATABASE IF NOT EXISTS sustentavel
+""")
+
+cursor.execute("""
+USE sustentavel
+""")
+
+
+
+
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS usuario (
+    id INT,
+    nome VARCHAR(255),
+
 )
 """)
 
 
-# Grãos disponíveis no sistema
 
-tipo = [
-    ("Arroz",),
-    ("Feijão",),
-    ("Milho",),
-    ("Trigo",),
-    ("Soja",)
-]
-
-cursor.executemany("""
-INSERT IGNORE INTO graos (tipo)
-VALUES (%s)
-""", tipo)
-
-
-# ==========================================
-# TABELA FAMÍLIA
-# ==========================================
 
 cursor.execute("""
-CREATE TABLE IF NOT EXISTS familia (
-    id_familia INT AUTO_INCREMENT PRIMARY KEY,
-    sobrenome VARCHAR(255) NOT NULL,
-    quantidade_de_membros INT NOT NULL,
-    endereco VARCHAR(255) NOT NULL
+CREATE TABLE IF NOT EXISTS residencia (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    proprietario VARCHAR(255),
+    quantidade_de_residentes INT,
+    endereco VARCHAR(255)
 )
 """)
 
 
-# ==========================================
-# TABELA ESTOQUE
-# ==========================================
 
 cursor.execute("""
-CREATE TABLE IF NOT EXISTS estoque (
-    id_estoque INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS energia (
+    id INT,
+    id_residencia INT,
+    quilowatts_por_hora DECIMAL(10, 2),
+    preco_do_quilowatt_por_hora DECIMAL(10, 2),
 
-    fk_id_familia INT NOT NULL,
-    fk_id_grao INT NOT NULL,
-
-    quantidade DECIMAL(12,2) NOT NULL DEFAULT 0,
-
-    FOREIGN KEY (fk_id_familia)
-        REFERENCES familia(id_familia)
-        ON DELETE CASCADE,
-
-    FOREIGN KEY (fk_id_grao)
-        REFERENCES graos(id_grao)
-        ON DELETE CASCADE,
-
-    UNIQUE (fk_id_familia, fk_id_grao)
+    FOREIGN KEY (id_residencia)
+    REFERENCES residencia(id)
+    ON DELETE CASCADE
 )
 """)
 
 
-# ==========================================
-# TABELA LOGS
-# ==========================================
 
 cursor.execute("""
-CREATE TABLE IF NOT EXISTS logs (
-    id_log INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS agua (
+    id INT,
+    id_residencia INT,
+    litros_de_agua_usados DECIMAL(10, 2),
+    preco_por_litro DECIMAL(10, 2),
 
-    fk_id_familia INT NOT NULL,
-    fk_id_grao INT,
-
-    quantidade DECIMAL(12,2),
-
-    acao VARCHAR(255) NOT NULL,
-
-    data_hora DATETIME DEFAULT CURRENT_TIMESTAMP,
-
-    FOREIGN KEY (fk_id_familia)
-        REFERENCES familia(id_familia)
-        ON DELETE CASCADE,
-
-    FOREIGN KEY (fk_id_grao)
-        REFERENCES graos(id_grao)
-        ON DELETE SET NULL
+    FOREIGN KEY (id_residencia)
+    REFERENCES residencia(id)
+    ON DELETE CASCADE
 )
 """)
 
 
-def conectar():
-
-    return mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="18062010",
-        database="fazendeiro"
-    )
 
 
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS lixo (
+    id INT,
+    id_residencia INT,
+    quilo_de_lixo DECIMAL(10, 2),
+    multa_por_quilo_de_lixo DECIMAL(10, 2),
+
+    FOREIGN KEY (id_residencia)
+    REFERENCES residencia(id)
+    ON DELETE CASCADE
+)
+""")
+
+
+
+
+conexao.commit()
+
+
+print("Banco de dados criado com sucesso!")
+print("Tabelas criadas com sucesso!")
+
+
+
+cursor.close()
+conexao.close()
