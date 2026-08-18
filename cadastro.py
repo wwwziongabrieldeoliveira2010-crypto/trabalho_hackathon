@@ -6,8 +6,6 @@ def cadastro_usuario():
     nome = input("Digite o nome do usuário: ")
 
     if vali_txt(nome):
-        
-
         conexao = conectar()
         cursor = conexao.cursor()
 
@@ -33,51 +31,48 @@ def cadastrar_residencia():
     while True:
         proprietario = input("Digite o id do proprietário: ")
         if validar_inteiro(proprietario):
-            return True
 
-        quantidade_residentes = input(
+            quantidade_residentes = input(
             "Digite a quantidade de residentes: "
-        )
+            )
 
-        try:
-            quantidade_residentes = int(quantidade_residentes)
+            try:
+                quantidade_residentes = int(quantidade_residentes)
 
-            if quantidade_residentes > 0:
-                break
+                if quantidade_residentes < 0:
+                    break
 
-            print("A quantidade deve ser maior que 0.")
+                print("A quantidade deve ser maior que 0.")
 
-        except ValueError:
-            print("Digite um número válido.")
+            except ValueError:
+                print("Digite um número válido.")
 
-    endereco = input("Digite o endereço da residência: ")
-    if vali_txt(endereco):
-        return True
+        endereco = input("Digite o endereço da residência: ")
+        if vali_txt(endereco):
 
-    
-    conexao = conectar()
-    cursor = conexao.cursor()
+            conexao = conectar()
+            cursor = conexao.cursor()
 
-    sql = """
-    INSERT INTO residencia
-    (proprietario, quantidade_de_residentes, endereco)
-    VALUES (%s, %s, %s)
-    """
+            sql = """
+            INSERT INTO residencia
+            (proprietario, quantidade_de_residentes, endereco)
+            VALUES (%s, %s, %s)
+            """
 
-    valores = (
-        proprietario,
-        quantidade_residentes,
-        endereco
-    )
+            valores = (
+            proprietario,
+            quantidade_residentes,
+            endereco
+            )
 
-    cursor.execute(sql, valores)
+            cursor.execute(sql, valores)
 
-    conexao.commit()
+            conexao.commit()
 
-    print("Residência cadastrada com sucesso!")
+            print("Residência cadastrada com sucesso!")
 
-    cursor.close()
-    conexao.close()
+            cursor.close()
+            conexao.close()
 cadastro_usuario()
 cadastrar_residencia()
 
