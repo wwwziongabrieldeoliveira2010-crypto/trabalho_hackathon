@@ -106,3 +106,21 @@ def ChecarUsuarios():
             break
         else:
             continue
+def lista_usuarios():
+
+    print("\n=== Lista de usuarios ===")
+
+    conn = conectar()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM usuario")
+    resultado = cursor.fetchall()
+    
+    if not resultado:
+            print("Nenhum usuario encontrado.")
+    else:
+        for usuario in resultado:
+            print(f"""ID: {usuario[0]} | Nome: {usuario[1]}""")
+
+    cursor.close()
+    conn.close()
+lista_usuarios()
