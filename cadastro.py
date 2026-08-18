@@ -6,38 +6,35 @@ def cadastro_usuario():
     nome = input("Digite o nome do usuário: ")
 
     if vali_txt(nome):
-        return True
+        
 
-    conexao = conectar()
-    cursor = conexao.cursor()
+        conexao = conectar()
+        cursor = conexao.cursor()
 
-    sql = """
-    INSERT INTO usuario (nome)
-    VALUES (%s)
-    """
+        sql =("""
+        INSERT INTO usuario (nome)
+        VALUES (%s)
+        """)
+        valores = (nome,)
+        cursor.execute(sql, valores)
 
-    valores = (nome)
+        conexao.commit()
 
-    cursor.execute(sql, valores)
+        print("Usuário cadastrado com sucesso!")
 
-    conexao.commit()
-
-    print("Usuário cadastrado com sucesso!")
-
-    cursor.close()
-    conexao.close()
+        cursor.close()
+        conexao.close()
 
 
 
 
 def cadastrar_residencia():
-    
-    while True:
-        proprietario = input("Digite o id do proprietário: ")
-        if vali_txt(proprietario):
-            return True
 
     while True:
+        proprietario = input("Digite o id do proprietário: ")
+        if validar_inteiro(proprietario):
+            return True
+
         quantidade_residentes = input(
             "Digite a quantidade de residentes: "
         )

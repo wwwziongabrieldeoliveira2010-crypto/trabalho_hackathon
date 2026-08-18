@@ -123,4 +123,3 @@ def lista_usuarios():
 
     cursor.close()
     conn.close()
-lista_usuarios()
