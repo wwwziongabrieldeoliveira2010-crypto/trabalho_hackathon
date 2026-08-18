@@ -3,7 +3,6 @@ import mysql.connector
 db = mysql.connector.connect(
     host="localhost",
     user="root",
-    password="01t0M31@"
     )
 cursor = db.cursor()
 
@@ -12,7 +11,6 @@ def conectar():
     return mysql.connector.connect(
         host="localhost",
         user="root",
-        password="01t0M31@",
         database="sustentavel"
     )
     
