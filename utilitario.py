@@ -70,20 +70,20 @@ def validar_inteiro(valor):
 
 
 
-def registrar_logs(familia, acao):
+def registrar_logs(fk_id_familia, acao):
 
     db = conectar()
     cursor = db.cursor()
 
     query = """
     INSERT INTO logs
-    (familia,acao,data_hora) 
+    (fk_id_familia,acao,data_hora) 
     VAULES (%s,%s,%s)
     """
     cursor.execute(
         query,
         (
-            familia,
+            fk_id_familia,
             acao,
             datetime.now()
 
