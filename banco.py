@@ -4,7 +4,7 @@ from datetime import datetime
 db = mysql.connector.connect(
     host="localhost",
     user="root",
-    password="01t0M31@"
+    password="18062010"
     )
 
 cursor = db.cursor()
@@ -49,3 +49,15 @@ cursor.execute("""CREATE TABLE IF NOT EXISTS familia (
  endereco VARCHAR (255),
  FOREIGN KEY (fk_id_estoque) REFERENCES estoque(id_estoque) ON DELETE CASCADE
  );""")
+
+
+def conectar():
+
+    return mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="18062010",
+        database="fazendeiro"
+    )
+
+
