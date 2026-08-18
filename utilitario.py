@@ -19,7 +19,7 @@ def conectar():
 
 def vali_txt(text):
     if text.strip == "":
-        print ("Erro: o campo   não pode estar vazio")
+        print ("Erro: o campo não pode estar vazio")
         return False
 
     elif any(text.isdigit() for char in text):
@@ -48,7 +48,6 @@ def validar_numero(valor):
             return False
 
         return True
-
     except ValueError:
         return False
 
@@ -114,7 +113,6 @@ def lista_usuarios():
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM usuario")
     resultado = cursor.fetchall()
-    
     if not resultado:
             print("Nenhum usuario encontrado.")
     else:
@@ -122,4 +120,4 @@ def lista_usuarios():
             print(f"""ID: {usuario[0]} | Nome: {usuario[1]}""")
 
     cursor.close()
-    conn.close()
+    conn.close()    
