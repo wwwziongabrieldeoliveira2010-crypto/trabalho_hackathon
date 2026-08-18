@@ -41,12 +41,11 @@ cursor.execute("""create table if not exists logs (
  FOREIGN KEY (fk_id_grao) REFERENCES graos(id_grao) ON DELETE CASCADE
  );""")
 
-cursor.execute("""create table if not exists logs (
-  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  id_graos int,
-  usuario varchar(255),
-  gramas decimal(10, 2),
-  uso varchar(255),
-  data datetime,
-  FOREIGN KEY (id_grao) REFERENCES graos(id_grao) ON DELETE CASCADE
-);""")
+cursor.execute("""CREATE TABLE IF NOT EXISTS familia (
+ id_usuario int primary key,
+ fk_id_estoque int,
+ sobrenome VARCHAR (255),
+ quantidadeDeMembros int,
+ endereco VARCHAR (255),
+ FOREIGN KEY (fk_id_estoque) REFERENCES estoque(id_estoque) ON DELETE CASCADE
+ );""")
