@@ -31,10 +31,11 @@ def cadastro_usuario():
 
 
 def cadastrar_residencia():
-
-    proprietario = input("Digite o nome do proprietário: ")
-    if vali_txt(proprietario):
-        return True
+    
+    while True:
+        proprietario = input("Digite o id do proprietário: ")
+        if vali_txt(proprietario):
+            return True
 
     while True:
         quantidade_residentes = input(
@@ -80,5 +81,6 @@ def cadastrar_residencia():
 
     cursor.close()
     conexao.close()
-
+cadastro_usuario()
+cadastrar_residencia()
 

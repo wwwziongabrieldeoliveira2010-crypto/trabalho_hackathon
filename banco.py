@@ -8,7 +8,7 @@ import mysql.connector
 conexao = mysql.connector.connect(
     host="localhost",
     user="root",
-    password="18062010"
+    password="01t0M31@"
 )
 
 cursor = conexao.cursor()
@@ -30,6 +30,17 @@ cursor.execute("""
 CREATE TABLE IF NOT EXISTS usuario (
     id INT AUTO_INCREMENT primary key,
     nome VARCHAR(255)
+)
+""")
+
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS residencia (
+    id_residencia INT AUTO_INCREMENT PRIMARY KEY,
+    fk_id_usuario int,
+    proprietario VARCHAR(255),
+    quantidade_de_residentes INT,
+    endereco VARCHAR(255),
+    FOREIGN KEY (fk_id_usuario) REFERENCES usuario(id) ON DELETE CASCADE
 )
 """)
 

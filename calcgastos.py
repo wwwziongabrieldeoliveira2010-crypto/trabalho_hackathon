@@ -160,3 +160,4 @@ def cadastrar_gastos():
 
     cursor.close()
     conexao.close()
+cadastrar_gastos()
