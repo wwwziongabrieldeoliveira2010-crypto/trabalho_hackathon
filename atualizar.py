@@ -192,4 +192,3 @@ def atualizar_residencia():
 
     return True
 
-atualizar_residencia()

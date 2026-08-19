@@ -23,10 +23,10 @@ def AnalisarAgua():
     else:
         for consumo in resultado:
             print(f"""ID: {consumo[0]} | ID da residencia: {consumo[1]} | Aguá usada: {consumo[2]}L""")
-        if consumo[2] > 18000:
-            print("Por favor diminua o seu uso de agua o ideal é de menos de 18000 litros por més")
-        else:
-            print("Parabens o seu consumo de agua estar dentro do ideal")  
+            if consumo[2] > 18000:
+                print("Por favor diminua o seu uso de agua o ideal é de menos de 18000 litros por més")
+            else:
+                print("Parabens o seu consumo de agua estar dentro do ideal")  
         cursor.close()
         conn.close() 
 
@@ -54,10 +54,10 @@ def AnalisarEnergia():
     else:
         for consumo in resultado:
             print(f"""ID: {consumo[0]} | ID da residencia: {consumo[1]} | energia usada: {consumo[2]}kWh""")
-        if consumo[2] > 250:
-            print("Por favor diminua o seu uso de energia o ideal é de menos de 250kWh")
-        else:
-            print("Parabens o seu consumo de energia estar dentro do ideal")
+            if consumo[2] > 250:
+                print("Por favor diminua o seu uso de energia o ideal é de menos de 250kWh")
+            else:
+                print("Parabens o seu consumo de energia estar dentro do ideal")
 
         cursor.close()
         conn.close()
@@ -86,10 +86,10 @@ def AnalisarLixo():
     else:
         for consumo in resultado:
             print(f"""ID: {consumo[0]} | ID da residencia: {consumo[1]} | lixo produzido: {consumo[2]}kg""")
-        if consumo[2] > 151:
-            print("Por favor diminua a sua quantidade de lixo produzido o ideal é menos de 151kg")
-        else:
-            print("Parabens a sua quantidade de lixo produzido estar dentro do ideal")
+            if consumo[2] > 151:
+                print("Por favor diminua a sua quantidade de lixo produzido o ideal é menos de 151kg")
+            else:
+                print("Parabens a sua quantidade de lixo produzido estar dentro do ideal")
 
         cursor.close()
         conn.close()

@@ -1,3 +1,5 @@
+from AnalisarConsumo import *
+from atualizar import *
 from cadastro import *
 from consumo import *
 from deletar import *
@@ -13,9 +15,9 @@ def menu():
         print("2 - Cadastrar residencia")
         print("3 - Cadastrar gastos")
         print("4 - Mostrar Desempenho Sustentável")
-        print("4 - Deletar usuario ")
-        print("5 - Deletar residencia")
-        print("6 - Atualizar dados da conta")
+        print("5 - Deletar usuario ")
+        print("6 - Deletar residencia")
+        print("7 - Atualizar dados da conta")
 
         opcao = input("digite qual sua opção: ")
 
@@ -24,15 +26,19 @@ def menu():
         elif opcao == "2":
             cadastrar_residencia()
         elif opcao == "3":
-            # cadastrar_agua()
-            # cadastrar_energia()
+            cadastrar_agua()
+            cadastrar_energia()
             cadastrar_lixo()
         elif opcao == "4":
-            deletar_usuario()
+            AnalisarAgua()
+            AnalisarEnergia()
+            AnalisarLixo()
         elif opcao == "5":
-            deletar_residencia()
+            deletar_usuario()
         elif opcao == "6":
-            print('n')
+            deletar_residencia()
+        elif opcao == "7":
+            atualizar_usuario()
         elif opcao == "0":
             print("saindo do sistema")
             break
