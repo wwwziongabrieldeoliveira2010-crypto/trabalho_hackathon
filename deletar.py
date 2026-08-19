@@ -2,10 +2,12 @@ from utilitario import *
 
 def deletar_usuario():
 
-    id_usuario = input("Digite o ID do usuário que deseja deletar: ")
+    while True:
+        id_usuario = input("Digite o ID do usuário que deseja deletar: ")
 
-    if validar_inteiro(id_usuario):
-        return False
+        if validar_inteiro(id_usuario):
+            break
+        print("Digite um ID valido")
 
     conexao = conectar()
     cursor = conexao.cursor()
@@ -36,9 +38,9 @@ def deletar_residencia():
     cursor = conexao.cursor()
 
     cursor.execute("""
-        SELECT fk_id_residencia
+        SELECT id_residencia
         FROM residencia
-        WHERE fk_id_residencia = %s
+        WHERE id_residencia = %s
     """, (id_residencia,))
 
     residencia = cursor.fetchone()
@@ -51,7 +53,7 @@ def deletar_residencia():
 
         cursor.execute("""
             DELETE FROM residencia
-            WHERE fk_id_residencia = %s
+            WHERE id_residencia = %s
         """, (id_residencia,))
 
         conexao.commit()
