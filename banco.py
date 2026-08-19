@@ -1,19 +1,13 @@
 import mysql.connector
-
-
 # ==========================================
 # CONEXÃO COM O MYSQL
 # ==========================================
-
 db = mysql.connector.connect(
     host="localhost",
     user="root",
     password="18062010"
 )
-
 cursor = db.cursor()
-
-
 # ==========================================
 # CRIAR BANCO DE DADOS
 # ==========================================

@@ -32,6 +32,3 @@ def lista_residencias():
 
     cursor.close()
     conn.close()    
-
-lista_usuarios()
-lista_residencias()
