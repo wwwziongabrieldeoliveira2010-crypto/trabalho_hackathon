@@ -12,137 +12,154 @@ def cadastrar_agua():
 
     while True:
 
-        fk_id_residencia = input(
-            "Digite o ID da residência: "
-        )
+        fk_id_residencia = input("Digite o ID da residência: ")
 
         if not validar_inteiro(fk_id_residencia):
             print("Digite um ID válido.")
             continue
-        elif verificar_residencia(fk_id_residencia):
-                print("Residência encontrada.")
-        else:
-            print("Essa residência não existe. Digite outro ID.")
-            continue
 
-        # Verifica se a residência existe
-        sql = """
-        SELECT fk_id_usuario
-        FROM residencia
-        WHERE fk_id_usuario = %s
-        """
+        fk_id_residencia = int(fk_id_residencia)
 
-        cursor.execute(sql, (fk_id_residencia,))
-
-        residencia = cursor.fetchone()
-
-        if residencia:
+        if verificar_residencia(fk_id_residencia):
+            print("Residência encontrada.")
             break
 
-        print("Essa residência não existe. Digite outro ID.")
+        print("Essa residência não existe.")
 
     # ==========================================
-    # LITROS DE ÁGUA
+    # CADASTRO DOS MESES
     # ==========================================
 
     while True:
 
-        litros = input(
-            "Digite a quantidade de água usada em litros: "
+        # MÊS
+        while True:
+
+            mes = input("Digite o mês (1-12): ")
+
+            if validar_inteiro(mes):
+
+                mes = int(mes)
+
+                if 1 <= mes <= 12:
+                    break
+
+            print("Digite um mês válido.")
+
+        # ANO
+        while True:
+
+            ano = input("Digite o ano: ")
+
+            if validar_inteiro(ano):
+
+                ano = int(ano)
+
+                if ano >= 2000:
+                    break
+
+            print("Digite um ano válido.")
+
+        sql = """
+        SELECT id_agua
+        FROM agua
+        WHERE fk_id_residencia = %s
+        AND mes = %s
+        AND ano = %s
+        """
+
+        cursor.execute(
+            sql,
+            (fk_id_residencia, mes, ano)
         )
-        if validar_decimal(litros):
 
-            litros = float(litros)
+        resultado = cursor.fetchone()
 
-            if litros > 0:
-                break
+        if resultado:
+            print("Esse mês já possui dados cadastrados.")
+            continue
+        # LITROS
+        while True:
 
-        print("Digite uma quantidade válida maior que 0.")
+            litros = input(
+                "Digite a quantidade de água usada em litros: "
+            )
 
-    # ==========================================
-    # PREÇO
-    # ==========================================
+            if validar_decimal(litros):
 
-    while True:
+                litros = float(litros)
 
-        preco = input(
-            "Digite o preço por litro: "
+                if litros > 0:
+                    break
+
+            print("Digite uma quantidade válida maior que 0.")
+
+        # PREÇO
+        while True:
+
+            preco = input(
+                "Digite o preço por litro: "
+            )
+
+            if validar_decimal(preco):
+
+                preco = float(preco)
+
+                if preco >= 0:
+                    break
+
+            print("Digite um preço válido.")
+
+        # ==========================================
+        # INSERIR NO MYSQL
+        # ==========================================
+
+        sql = """
+        INSERT INTO agua (
+            fk_id_residencia,
+            litros_de_agua_usados,
+            preco_por_litro,
+            mes,
+            ano
+        )
+        VALUES (%s, %s, %s, %s, %s)
+        """
+
+        valores = (
+            fk_id_residencia,
+            litros,
+            preco,
+            mes,
+            ano
         )
 
-        if validar_decimal(preco):
+        cursor.execute(sql, valores)
+        conexao.commit()
 
-            preco = float(preco)
+        print("\nConsumo de água cadastrado com sucesso!")
 
-            if preco >= 0:
+        # ==========================================
+        # PERGUNTAR SE QUER OUTRO MÊS
+        # ==========================================
+
+        while True:
+
+            continuar = input(
+                "\nDeseja cadastrar outro mês? (s/n): "
+            ).lower()
+
+            if continuar == "s":
                 break
 
-        print("Digite um preço válido.")
+            elif continuar == "n":
+                cursor.close()
+                conexao.close()
 
-    # ==========================================
-    # MÊS
-    # ==========================================
+                print("Cadastro finalizado.")
+                return
 
-    while True:
-
-        mes = input("Digite o mês (1-12): ")
-
-        if validar_inteiro(mes):
-
-            mes = int(mes)
-
-            if 1 <= mes <= 12:
-                break
-
-        print("Digite um mês válido.")
-
-    # ==========================================
-    # ANO
-    # ==========================================
-
-    while True:
-
-        ano = input("Digite o ano: ")
-
-        if validar_inteiro(ano):
-
-            ano = int(ano)
-
-            if ano >= 2000:
-                break
-
-        print("Digite um ano válido.")
-
-    # ==========================================
-    # INSERIR NO MYSQL
-    # ==========================================
-
-    sql = """
-    INSERT INTO agua (
-        fk_id_residencia,
-        litros_de_agua_usados,
-        preco_por_litro,
-        mes,
-        ano
-    )
-    VALUES (%s, %s, %s, %s, %s)
-    """
-
-    valores = (
-        fk_id_residencia,
-        litros,
-        preco,
-        mes,
-        ano
-    )
-
-    cursor.execute(sql, valores)
-
-    conexao.commit()
-
-    print("Consumo de água cadastrado com sucesso!")
-
-    cursor.close()
-    conexao.close()
+            else:
+                print("Digite apenas S ou N.")
 
 
 
