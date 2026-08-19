@@ -29,50 +29,67 @@ def cadastro_usuario():
 def cadastrar_residencia():
 
     while True:
-        proprietario = input("Digite o id do proprietário: ")
-        if validar_inteiro(proprietario):
+        usuario_id = input("Digite o ID do usuário proprietário da residência: ")
 
-            quantidade_residentes = input(
+        if not validar_inteiro(usuario_id):
+            print("Digite um ID válido.")
+            continue
+
+        usuario_id = int(usuario_id)
+
+        if not verificar_usuario(usuario_id):
+            print("Usuário não encontrado.")
+            continue
+
+        quantidade_residentes = input(
             "Digite a quantidade de residentes: "
-            )
+        )
 
-            try:
-                quantidade_residentes = int(quantidade_residentes)
+        if not validar_inteiro(quantidade_residentes):
+            print("Digite uma quantidade válida.")
+            continue
 
-                if quantidade_residentes <= 0:
-                    continue
+        quantidade_residentes = int(quantidade_residentes)
 
-                print("A quantidade deve ser maior que 0.")
-
-            except ValueError:
-                print("Digite um número válido.")
+        if quantidade_residentes <= 0:
+            print("A quantidade deve ser maior que 0.")
+            continue
 
         endereco = input("Digite o endereço da residência: ")
-        if vali_txt(endereco):
 
-            conexao = conectar()
-            cursor = conexao.cursor()
+        if not vali_txt(endereco):
+            print("O endereço não pode estar vazio.")
+            continue
 
-            sql = """
-            INSERT INTO residencia
-            (proprietario, quantidade_de_residentes, endereco)
-            VALUES (%s, %s, %s)
-            """
+        # ==============================
+        # CONEXÃO COM O MYSQL
+        # ==============================
 
-            valores = (
-            proprietario,
+        conexao = conectar()
+        cursor = conexao.cursor()
+
+        sql = """
+        INSERT INTO residencia
+        (quantidade_de_residentes, endereco)
+        VALUES (%s, %s)
+        """
+
+        valores = (
             quantidade_residentes,
             endereco
-            )
+        )
 
-            cursor.execute(sql, valores)
+        cursor.execute(sql, valores)
 
-            conexao.commit()
+        conexao.commit()
 
-            print("Residência cadastrada com sucesso!")
+        print("Residência cadastrada com sucesso!")
 
-            cursor.close()
-            conexao.close()
+        cursor.close()
+        conexao.close()
+
+        return True
+
+
 cadastro_usuario()
 cadastrar_residencia()
-

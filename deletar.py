@@ -35,11 +35,10 @@ def deletar_residencia():
     conexao = conectar()
     cursor = conexao.cursor()
 
-
     cursor.execute("""
-        SELECT id_residencia
+        SELECT fk_id_residencia
         FROM residencia
-        WHERE id_residencia = %s
+        WHERE fk_id_residencia = %s
     """, (id_residencia,))
 
     residencia = cursor.fetchone()
@@ -52,7 +51,7 @@ def deletar_residencia():
 
         cursor.execute("""
             DELETE FROM residencia
-            WHERE id_residencia = %s
+            WHERE fk_id_residencia = %s
         """, (id_residencia,))
 
         conexao.commit()

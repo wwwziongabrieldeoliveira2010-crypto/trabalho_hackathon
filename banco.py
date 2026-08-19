@@ -45,52 +45,50 @@ CREATE TABLE IF NOT EXISTS residencia (
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS agua (
     id_agua INT AUTO_INCREMENT PRIMARY KEY,
-
     fk_id_residencia INT NOT NULL,
 
     litros_de_agua_usados DECIMAL(10,2) NOT NULL,
+    preco_por_litro DECIMAL(10,4),
 
-    preco_por_litro DECIMAL(10,2),
+    mes INT NOT NULL,
+    ano INT NOT NULL,
 
     FOREIGN KEY (fk_id_residencia)
-    REFERENCES residencia(id_residencia)
-    ON DELETE CASCADE
+        REFERENCES residencia(fk_id_usuario)
+        ON DELETE CASCADE
 )
 """)
+
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS energia (
     id_energia INT AUTO_INCREMENT PRIMARY KEY,
-
     fk_id_residencia INT NOT NULL,
 
     quilowatts_por_hora DECIMAL(10,2) NOT NULL,
+    preco_do_quilowatt_por_hora DECIMAL(10,4),
 
-    preco_do_quilowatt_por_hora DECIMAL(10,2),
+    mes INT NOT NULL,
+    ano INT NOT NULL,
 
     FOREIGN KEY (fk_id_residencia)
-    REFERENCES residencia(id_residencia)
-    ON DELETE CASCADE
+        REFERENCES residencia(fk_id_usuario)
+        ON DELETE CASCADE
 )
 """)
-
-
-# ==========================================
-# TABELA LIXO
-# ==========================================
 
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS lixo (
     id_lixo INT AUTO_INCREMENT PRIMARY KEY,
-
     fk_id_residencia INT NOT NULL,
 
     quilo_de_lixo DECIMAL(10,2) NOT NULL,
 
-    multa_por_quilo_de_lixo DECIMAL(10,2),
+    mes INT NOT NULL,
+    ano INT NOT NULL,
 
     FOREIGN KEY (fk_id_residencia)
-    REFERENCES residencia(id_residencia)
-    ON DELETE CASCADE
+        REFERENCES residencia(fk_id_usuario)
+        ON DELETE CASCADE
 )
 """)
 

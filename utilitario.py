@@ -3,6 +3,7 @@ import mysql.connector
 db = mysql.connector.connect(
     host="localhost",
     user="root",
+    password="18062010",
     )
 cursor = db.cursor()
 
@@ -11,12 +12,13 @@ def conectar():
     return mysql.connector.connect(
         host="localhost",
         user="root",
+        password="18062010",
         database="sustentavel"
     )
     
 
 def vali_txt(text):
-    if text.strip == "":
+    if text.strip() == "":
         print ("Erro: o campo não pode estar vazio")
         return False
 
@@ -27,7 +29,7 @@ def vali_txt(text):
     return True 
 
 def vali_num(num1):
-    if num1.strip == "":
+    if num1.strip() == "":
         print("Error: campo não pode estar vazio")
 
     try:
@@ -37,8 +39,9 @@ def vali_num(num1):
         print("Error: o campo tem que ser numero")
 
 def validar_numero(valor):
-    if valor.strip == "":
+    if valor.strip() == "":
         print ("campo não pode estar vazio")
+        return False
     try:
         numero = float(valor)
 
@@ -75,7 +78,7 @@ def registrar_logs(fk_id_familia, acao):
     query = """
     INSERT INTO logs
     (fk_id_familia,acao,data_hora) 
-    VAULES (%s,%s,%s)
+    VALUES (%s,%s,%s)
     """
     cursor.execute(
         query,
@@ -87,7 +90,7 @@ def registrar_logs(fk_id_familia, acao):
         )
     )
 
-    db.commit
+    db.commit()
 
     cursor.close()
     db.close 
@@ -119,3 +122,54 @@ def lista_usuarios():
 
     cursor.close()
     conn.close()    
+
+
+def validar_decimal(valor):
+
+    if valor.strip() == "":
+        return False
+
+    try:
+        float(valor)
+        return True
+
+    except ValueError:
+        return False
+
+
+def verificar_residencia(id_residencia):
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    cursor.execute("""
+        SELECT id_residencia
+        FROM residencia
+        WHERE id_residencia = %s
+    """, (id_residencia,))
+
+    resultado = cursor.fetchone()
+
+    cursor.close()
+    conexao.close()
+
+    return resultado is not None
+
+
+
+
+def verificar_usuario(id_usuario):
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    cursor.execute("""
+        SELECT id
+        FROM usuario
+        WHERE id = %s
+    """, (id_usuario,))
+
+    resultado = cursor.fetchone()
+
+    cursor.close()
+    conexao.close()
+
+    return resultado is not None
