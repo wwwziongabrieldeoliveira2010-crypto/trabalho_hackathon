@@ -196,5 +196,3 @@ def cadastrar_residencia():
 
     return True
 
-cadastro_usuario()
-cadastrar_residencia()
