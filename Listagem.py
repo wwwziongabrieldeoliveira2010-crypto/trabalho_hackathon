@@ -28,7 +28,7 @@ def lista_residencias():
             print("Nenhuma residencia encontrado.")
     else:
         for residencia in resultado:
-            print(f"""ID da residencia: {residencia[0]} | ID do propriedario: {residencia[1]} | Quantidade de residentes: {residencia[2]} | Endereço: {residencia[3]}""")
+            print(f"""ID da residencia: {residencia[0]} | ID do propriedario: {residencia[1]}""")
 
     cursor.close()
     conn.close()    

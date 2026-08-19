@@ -18,6 +18,9 @@ def menu():
         print("5 - Deletar usuario ")
         print("6 - Deletar residencia")
         print("7 - Atualizar dados da conta")
+        print("8 - Atualizar dados da residencia")
+        print("9 - Listar usuarios")
+        print("10 - Listar residencias")
 
         opcao = input("digite qual sua opção: ")
 
@@ -37,6 +40,12 @@ def menu():
             deletar_residencia()
         elif opcao == "7":
             atualizar_usuario()
+        elif opcao == "8":
+            atualizar_residencia()
+        elif opcao == "9":
+            lista_usuarios()
+        elif opcao == "10":
+            lista_residencias()
         elif opcao == "0":
             print("saindo do sistema")
             break
