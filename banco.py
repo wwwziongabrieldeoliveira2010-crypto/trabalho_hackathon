@@ -1,30 +1,19 @@
 import mysql.connector
-# ==========================================
-# CONEXÃO COM O MYSQL
-# ==========================================
+# conexão com mysql
 db = mysql.connector.connect(
     host="localhost",
     user="root",
     password="18062010"
 )
 cursor = db.cursor()
-# ==========================================
-# CRIAR BANCO DE DADOS
-# ==========================================
-
+# criando banco
 cursor.execute("""
 CREATE DATABASE IF NOT EXISTS sustentavel
 """)
-
 cursor.execute("""
 USE sustentavel
 """)
-
-
-# ==========================================
-# TABELA USUARIO
-# ==========================================
-
+# tabela usuario
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS usuario (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -32,11 +21,7 @@ CREATE TABLE IF NOT EXISTS usuario (
 )
 """)
 
-
-# ==========================================
-# TABELA RESIDENCIA
-# ==========================================
-
+# tabela residencia
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS residencia (
     id_residencia INT AUTO_INCREMENT PRIMARY KEY,
@@ -49,11 +34,7 @@ CREATE TABLE IF NOT EXISTS residencia (
         ON DELETE CASCADE
 )
 """)
-
-
-# ==========================================
-# TABELA AGUA
-# ==========================================
+# tabela agua
 
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS agua (
@@ -91,10 +72,7 @@ CREATE TABLE IF NOT EXISTS energia (
     ano INT NOT NULL,
 
     FOREIGN KEY (fk_id_residencia)
-        REFERENCES residencia(id_residencia)
-        ON DELETE CASCADE
-)
-""")
+        REFERENCES residencia(id_residencia)ON DELETE CASCADE)""")
 
 
 # ==========================================
@@ -117,8 +95,6 @@ CREATE TABLE IF NOT EXISTS lixo (
         ON DELETE CASCADE
 )
 """)
-
-
 db.commit()
  
 print("Banco de dados criado com sucesso!")

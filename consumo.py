@@ -130,7 +130,7 @@ def cadastrar_agua():
             litros,
             preco,
             mes,
-            ano
+            ano 
         )
 
         cursor.execute(sql, valores)
@@ -171,125 +171,161 @@ def cadastrar_energia():
     # ==========================================
     # ID DA RESIDÊNCIA
     # ==========================================
-
     while True:
 
-        fk_id_residencia = input(
-            "Digite o ID da residência: "
-        )
+        fk_id_residencia = input("Digite o ID da residência: ")
+
         if not validar_inteiro(fk_id_residencia):
             print("Digite um ID válido.")
             continue
-        elif verificar_residencia(fk_id_residencia):
+
+        fk_id_residencia = int(fk_id_residencia)
+
+        if verificar_residencia(fk_id_residencia):
             print("Residência encontrada.")
             break
-        else:
-            print("Residência não encontrada.")
-            continue
 
-    # ==========================================
-    # CONSUMO DE ENERGIA
-    # ==========================================
+        print("Essa residência não existe.")
 
-    while True:
 
-        kwh = input(
-            "Digite a quantidade de energia usada em kWh: "
-        )
-
-        if validar_decimal(kwh):
-
-            kwh = float(kwh)
-
-            if kwh > 0:
-                break
-
-        print("Digite uma quantidade válida maior que 0.")
-
-    # ==========================================
-    # PREÇO DO KWH
-    # ==========================================
-
-    while True:
-
-        preco = input(
-            "Digite o preço do kWh: "
-        )
-
-        if validar_decimal(preco):
-
-            preco = float(preco)
-
-            if preco >= 0:
-                break
-
-        print("Digite um preço válido.")
 
     # ==========================================
     # MÊS
     # ==========================================
-
     while True:
 
-        mes = input("Digite o mês (1-12): ")
+            while True:
 
-        if validar_inteiro(mes):
+                mes = input("Digite o mês (1-12): ")
 
-            mes = int(mes)
+                if validar_inteiro(mes):
 
-            if 1 <= mes <= 12:
-                break
+                    mes = int(mes)
 
-        print("Digite um mês válido.")
+                    if 1 <= mes <= 12:
+                        break
+
+                print("Digite um mês válido.")
 
     # ==========================================
     # ANO
     # ==========================================
 
-    while True:
+            while True:
 
-        ano = input("Digite o ano: ")
+                ano = input("Digite o ano: ")
 
-        if validar_inteiro(ano):
+                if validar_inteiro(ano):
 
-            ano = int(ano)
+                    ano = int(ano)
 
-            if ano >= 2000:
-                break
+                    if ano >= 2000:
+                        break
 
-        print("Digite um ano válido.")
+                print("Digite um ano válido.")
+
+                # ==========================================
+                # VERIFICAR SE O MÊS JÁ EXISTE
+                # ==========================================
+
+                sql = """
+                SELECT id_energia
+                FROM energia
+                WHERE fk_id_residencia = %s
+                AND mes = %s
+                AND ano = %s
+                """
+
+                cursor.execute(
+                    sql,
+                    (fk_id_residencia, mes, ano)
+                )
+
+                resultado = cursor.fetchone()
+
+                if resultado:
+                    print("Esse mês já possui dados cadastrados.")
+                    continue
+
+        
+        # PEGAR ENERGIA
+            while True:
+
+                kwh = input(
+                    "Digite a quantidade de energia usada em kWh: "
+                )
+
+                if validar_decimal(kwh):
+
+                    kwh = float(kwh)
+
+                    if kwh > 0:
+                        break
+
+                print("Digite uma quantidade válida maior que 0.")
+
+            while True:
+
+                preco = input(
+                    "Digite o preço do kWh: "
+                )
+
+                if validar_decimal(preco):
+
+                    preco = float(preco)
+
+                    if preco >= 0:
+                        break
+
+                print("Digite um preço válido.")
 
     # ==========================================
     # INSERIR NO MYSQL
     # ==========================================
 
-    sql = """
-    INSERT INTO energia (
-        fk_id_residencia,
-        quilowatts_por_hora,
-        preco_do_quilowatt_por_hora,
-        mes,
-        ano
-    )
-    VALUES (%s, %s, %s, %s, %s)
-    """
+            sql = """
+            INSERT INTO energia (
+                fk_id_residencia,
+                quilowatts_por_hora,
+                preco_do_quilowatt_por_hora,
+                mes,
+                ano
+            )
+            VALUES (%s, %s, %s, %s, %s)
+            """
 
-    valores = (
-        fk_id_residencia,
-        kwh,
-        preco,
-        mes,
-        ano
-    )
+            valores = (
+                fk_id_residencia,
+                kwh,
+                preco,
+                mes,
+                ano
+            )
 
-    cursor.execute(sql, valores)
+            cursor.execute(sql, valores)
 
-    conexao.commit()
+            conexao.commit()
 
-    print("Consumo de energia cadastrado com sucesso!")
+            print("Consumo de energia cadastrado com sucesso!")
+    
+            while True:
 
-    cursor.close()
-    conexao.close()
+                continuar = input(
+                    "\nDeseja cadastrar outro mês? (s/n): "
+                ).lower()
+
+                if continuar == "s":
+                    break
+
+                elif continuar == "n":
+                    cursor.close()
+                    conexao.close()
+                    print("Cadastro finalizado.")
+                    return
+
+                else:
+                    print("Digite apenas S ou N.")
+
 
 def cadastrar_lixo():
 
@@ -316,84 +352,104 @@ def cadastrar_lixo():
             print("Essa residência não existe. Digite outro ID.")
             continue
 
-    # ==========================================
-    # QUANTIDADE DE LIXO
-    # ==========================================
-
+  
     while True:
 
-        quantidade = input(
-            "Digite a quantidade de lixo produzida em kg: "
+        # ==========================================
+        # MÊS
+        # ==========================================
+
+        while True:
+
+            mes = input("Digite o mês (1-12): ")
+            if validar_inteiro(mes):
+
+                mes = int(mes)
+
+                if 1 <= mes <= 12:
+                    break
+
+            print("Digite um mês válido.")
+        
+        # ==========================================
+        # ANO
+        # ==========================================
+
+        while True:
+
+            ano = input("Digite o ano: ")
+
+            if validar_inteiro(ano):
+
+                ano = int(ano)
+
+                if ano >= 2000:
+                    break
+
+            print("Digite um ano válido.")
+
+
+        sql ="""
+            SELECT id_energia
+            FROM energia
+            WHERE fk_id_residencia = %s
+            AND mes = %s
+            AND ano = %s
+            """
+        cursor.execute(
+            sql,
+            (fk_id_residencia, mes, ano)
+                )
+
+        resultado = cursor.fetchone()
+
+        if resultado:
+            print("Esse mês já possui dados cadastrados.")
+            continue
+
+        
+        # pegar quantidade de lixo
+        while True:
+
+            quantidade = input(
+                "Digite a quantidade de lixo produzida em kg: "
+            )
+
+            if validar_decimal(quantidade):
+
+                quantidade = float(quantidade)
+
+                if quantidade > 0:
+                    break
+
+            print("Digite uma quantidade válida maior que 0.")
+
+        # ==========================================
+        # INSERIR NO MYSQL
+        # ==========================================
+
+        sql = """
+        INSERT INTO lixo (
+            fk_id_residencia,
+            quilo_de_lixo,
+            mes,
+            ano
+        )
+        VALUES (%s, %s, %s, %s)
+        """
+
+        valores = (
+            fk_id_residencia,
+            quantidade,
+            mes,
+            ano
         )
 
-        if validar_decimal(quantidade):
+        cursor.execute(sql, valores)
 
-            quantidade = float(quantidade)
+        conexao.commit()
 
-            if quantidade > 0:
-                break
+        print("Produção de lixo cadastrada com sucesso!")
 
-        print("Digite uma quantidade válida maior que 0.")
-
-    # ==========================================
-    # MÊS
-    # ==========================================
-
-    while True:
-
-        mes = input("Digite o mês (1-12): ")
-        if validar_inteiro(mes):
-
-            mes = int(mes)
-
-            if 1 <= mes <= 12:
-                break
-
-        print("Digite um mês válido.")
-    
-    # ==========================================
-    # ANO
-    # ==========================================
-
-    while True:
-
-        ano = input("Digite o ano: ")
-
-        if validar_inteiro(ano):
-
-            ano = int(ano)
-
-            if ano >= 2000:
-                break
-
-        print("Digite um ano válido.")
-
-    # ==========================================
-    # INSERIR NO MYSQL
-    # ==========================================
-
-    sql = """
-    INSERT INTO lixo (
-        fk_id_residencia,
-        quilo_de_lixo,
-        mes,
-        ano
-    )
-    VALUES (%s, %s, %s, %s)
-    """
-
-    valores = (
-        fk_id_residencia,
-        quantidade,
-        mes,
-        ano
-    )
-
-    cursor.execute(sql, valores)
-
-    conexao.commit()
-
-    print("Produção de lixo cadastrada com sucesso!")
-
-    cursor.close()
-    conexao.close()
+        cursor.close()
+        conexao.close()

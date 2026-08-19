@@ -12,6 +12,7 @@ def menu():
         print("1 - Cadastrar usuario")
         print("2 - Cadastrar residencia")
         print("3 - Cadastrar gastos")
+        print("4 - Mostrar Desempenho Sustentável")
         print("4 - Deletar usuario ")
         print("5 - Deletar residencia")
         print("6 - Atualizar dados da conta")
@@ -23,8 +24,8 @@ def menu():
         elif opcao == "2":
             cadastrar_residencia()
         elif opcao == "3":
-            cadastrar_agua()
-            cadastrar_energia()
+            # cadastrar_agua()
+            # cadastrar_energia()
             cadastrar_lixo()
         elif opcao == "4":
             deletar_usuario()
