@@ -82,8 +82,6 @@ A partir do menu, o usuário poderá acessar as funcionalidades disponíveis no 
 * Atualização de informações;
 * Análise de consumo;
 * Exclusão de registros;
-* Visualização das movimentações.
-
 ---
 
 ## 👨‍💻 Créditos
