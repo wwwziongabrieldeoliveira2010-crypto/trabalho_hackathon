@@ -3,8 +3,11 @@ from utilitario import *
 def deletar_usuario():
 
     while True:
-        id_usuario = input("Digite o ID do usuário que deseja deletar: ")
+        id_usuario = input("Digite o ID do usuário que deseja deletar '0-Para sair: ")
 
+        if id_usuario == "0":
+            print("Voltado...")
+            return False
         if validar_inteiro(id_usuario):
             break
         print("Digite um ID valido")
@@ -32,8 +35,11 @@ def deletar_usuario():
 
 def deletar_residencia():
 
-    id_residencia = input("Digite o ID da residência que deseja deletar: ")
+    id_residencia = input("Digite o ID da residência que deseja deletar '0-Para sair': ")
 
+    if id_residencia == "0":
+        print("Voltado...")
+        return False
     conexao = conectar()
     cursor = conexao.cursor()
 

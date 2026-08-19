@@ -3,8 +3,11 @@ from utilitario import *
 def atualizar_usuario():
 
     while True:
-        id_usuario = input("Digite o ID do usuário que deseja atualizar: ")
+        id_usuario = input("Digite o ID do usuário que deseja atualizar '0-Para sair': ")
 
+        if id_usuario == "0":
+            print("Voltado...")
+            return False
         if not validar_inteiro(id_usuario):
             print("Digite um ID válido.")
             continue
@@ -48,8 +51,12 @@ def atualizar_residencia():
     print("        ATUALIZADOR DE RESIDÊNCIA")
     print("======================================")
     while True:
-        id_residencia = input("Digite o ID da residência que deseja atualizar: ")
-    
+        id_residencia = input("Digite o ID da residência que deseja atualizar '0-Para sair': ")
+
+        if id_residencia == "0":
+            print("Voltado...")
+            return False
+        
         conexao = conectar()
         cursor = conexao.cursor()
     
