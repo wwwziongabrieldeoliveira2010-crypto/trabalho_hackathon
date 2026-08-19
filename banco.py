@@ -125,14 +125,10 @@ CREATE TABLE IF NOT EXISTS lixo (
 """)
 
 
-# ==========================================
-# FINALIZAR
-# ==========================================
-
 db.commit()
-
+ 
 print("Banco de dados criado com sucesso!")
 print("Tabelas criadas com sucesso!")
-
+ 
 cursor.close()
 db.close()
