@@ -30,9 +30,7 @@ def menu():
             cadastrar_energia()
             cadastrar_lixo()
         elif opcao == "4":
-            AnalisarAgua()
-            AnalisarEnergia()
-            AnalisarLixo()
+            Analisar()
         elif opcao == "5":
             deletar_usuario()
         elif opcao == "6":
