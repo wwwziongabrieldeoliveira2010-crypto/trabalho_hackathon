@@ -72,4 +72,3 @@ def Analisar():
             break
         else:
             print("Opção invalida")
-Analisar()

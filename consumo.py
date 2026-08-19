@@ -390,16 +390,14 @@ def cadastrar_lixo():
 
 
         sql ="""
-            SELECT id_energia
-            FROM energia
+            SELECT id_lixo
+            FROM lixo
             WHERE fk_id_residencia = %s
             AND mes = %s
             AND ano = %s
             """
-        cursor.execute(
-            sql,
-            (fk_id_residencia, mes, ano)
-                )
+        valores1 = (fk_id_residencia, mes, ano,)
+        cursor.execute(sql, valores1)
 
         resultado = cursor.fetchone()
 
@@ -451,5 +449,21 @@ def cadastrar_lixo():
 
         print("Produção de lixo cadastrada com sucesso!")
 
-        cursor.close()
-        conexao.close()
+        while True:
+        
+            continuar = input(
+            "\nDeseja cadastrar outro mês? (s/n): "
+            ).lower()
+        
+            if continuar == "s":
+                break
+        
+            elif continuar == "n":
+                cursor.close()
+                conexao.close()
+                print("Cadastro finalizado.")
+                return
+        
+            else:
+                print("Digite apenas S ou N.")
+        
