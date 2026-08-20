@@ -3,7 +3,7 @@ import mysql.connector
 db = mysql.connector.connect(
     host="localhost",
     user="root",
-    password="01t0M31@",
+    password="18062010",
     )
 cursor = db.cursor()
 
@@ -12,7 +12,7 @@ def conectar():
     return mysql.connector.connect(
         host="localhost",
         user="root",
-        password="01t0M31@",
+        password="18062010",
         database="sustentavel"
     )
     
@@ -22,21 +22,11 @@ def vali_txt(text):
         print ("Erro: o campo não pode estar vazio")
         return False
 
-    elif any(text.isdigit() for char in text):
+    elif any(char.isdigit() for char in text):
         print ("Erro: campo tem que letra")
         return False
     
     return True 
-
-def vali_num(num1):
-    if num1.strip() == "":
-        print("Error: campo não pode estar vazio")
-
-    try:
-        float(num1)
-        return True
-    except:
-        print("Error: o campo tem que ser numero")
 
 def validar_numero(valor):
     if valor.strip() == "":
@@ -55,7 +45,7 @@ def validar_numero(valor):
 
 def validar_inteiro(valor):
 
-    if valor.strip == "":
+    if valor.strip() == "":
         print ("campo não pode estar vazio")
     try:
         numero = int(valor)
@@ -101,11 +91,14 @@ def ChecarUsuarios():
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM usuario")
         resultado = cursor.fetchall()
+
+        cursor.close()
+        conn.close()
+
         if not resultado:
             return "Nenhum usuario encontrado."
-            break
-        else:
-            continue
+        
+        return resultado
 def lista_usuarios():
 
     print("\n=== Lista de usuarios ===")
