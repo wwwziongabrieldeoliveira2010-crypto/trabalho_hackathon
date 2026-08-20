@@ -72,15 +72,9 @@ def atualizar_residencia():
             print("Residência não encontrada.")
             continue
         break
-    # ==========================================
-    # ID DO USUÁRIO
-    # ==========================================
 
     while True:
-
-        usuario_id = input(
-            "Digite o ID do usuário proprietário da residência: "
-        )
+        usuario_id = input("Digite o ID do usuário proprietário da residência: ")
 
         if not validar_inteiro(usuario_id):
             print("Digite um ID válido.")
@@ -88,91 +82,43 @@ def atualizar_residencia():
 
         usuario_id = int(usuario_id)
 
-
-        # Verificar se o usuário existe
-
         if not verificar_usuario(usuario_id):
-
             print("Usuário não encontrado.")
             print("Digite outro ID.")
-
             continue
-
 
         print("Usuário encontrado.")
-
         break
 
-
-    # ==========================================
-    # QUANTIDADE DE RESIDENTES
-    # ==========================================
-
     while True:
-
-        quantidade_residentes = input(
-            "Digite a quantidade de residentes: "
-        )
-
+        quantidade_residentes = input("Digite a quantidade de residentes: ")
 
         if not validar_inteiro(quantidade_residentes):
-
             print("Digite uma quantidade válida.")
-
             continue
 
-
-        quantidade_residentes = int(
-            quantidade_residentes
-        )
-
+        quantidade_residentes = int(quantidade_residentes)
 
         if quantidade_residentes <= 0:
-
-            print(
-                "A quantidade deve ser maior que 0."
-            )
-
+            print("A quantidade deve ser maior que 0.")
             continue
-
 
         break
 
-
-    # ==========================================
-    # ENDEREÇO
-    # ==========================================
-
     while True:
-
-        endereco = input(
-            "Digite o endereço da residência: "
-        )
+        endereco = input("Digite o endereço da residência: ")
 
 
         if not vali_txt(endereco):
 
-            print(
-                "O endereço não pode estar vazio."
-            )
-
+            print("O endereço não pode estar vazio.")
             continue
 
-
         break
-
-
-    # ==========================================
-    # CONEXÃO COM O MYSQL
-    # ==========================================
 
     conexao = conectar()
     cursor = conexao.cursor()
 
-
-    # ==========================================
-    # INSERIR RESIDÊNCIA
-    # ==========================================
     id_residencia = int(id_residencia)
     sql = """
         UPDATE residencia
@@ -198,4 +144,3 @@ def atualizar_residencia():
     conexao.close()
 
     return True
-
