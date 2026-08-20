@@ -93,7 +93,7 @@ def registrar_logs(fk_id_familia, acao):
     db.commit()
 
     cursor.close()
-    db.close 
+    db.close()
 
 def ChecarUsuarios():
     while True:
