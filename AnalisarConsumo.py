@@ -3,7 +3,10 @@ def Analisar():
     conn = conectar()
     cursor = conn.cursor()
     while True:
-        id_residencia = input("Digite o ID da residência que deseja analisar: ")
+        id_residencia = input("Digite o ID da residência que deseja analisar '0-Para sair': ")
+        if id_residencia == "0":
+                    print("Voltado...")
+                    return False
         cursor.execute("""
             SELECT id_residencia
             FROM residencia

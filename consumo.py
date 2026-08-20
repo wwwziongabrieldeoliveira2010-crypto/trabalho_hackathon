@@ -1,17 +1,11 @@
 from utilitario import *
 
-
 def cadastrar_agua():
 
     conexao = conectar()
     cursor = conexao.cursor()
 
-    # ==========================================
-    # ID DA RESIDÊNCIA
-    # ==========================================
-
     while True:
-
         fk_id_residencia = input("Digite o ID da residência '0-Para sair': ")
 
         if fk_id_residencia == "0":
@@ -29,13 +23,8 @@ def cadastrar_agua():
 
         print("Essa residência não existe.")
 
-    # ==========================================
-    # CADASTRO DOS MESES
-    # ==========================================
-
     while True:
 
-        # MÊS
         while True:
 
             mes = input("Digite o mês (1-12): ")
@@ -49,7 +38,6 @@ def cadastrar_agua():
 
             print("Digite um mês válido.")
 
-        # ANO
         while True:
 
             ano = input("Digite o ano: ")
@@ -81,12 +69,10 @@ def cadastrar_agua():
         if resultado:
             print("Esse mês já possui dados cadastrados.")
             continue
-        # LITROS
+
         while True:
 
-            litros = input(
-                "Digite a quantidade de água usada em litros: "
-            )
+            litros = input("Digite a quantidade de água usada em litros: ")
 
             if validar_decimal(litros):
 
@@ -97,12 +83,9 @@ def cadastrar_agua():
 
             print("Digite uma quantidade válida maior que 0.")
 
-        # PREÇO
         while True:
 
-            preco = input(
-                "Digite o preço por litro: "
-            )
+            preco = input("Digite o preço por litro: ")
 
             if validar_decimal(preco):
 
@@ -112,10 +95,6 @@ def cadastrar_agua():
                     break
 
             print("Digite um preço válido.")
-
-        # ==========================================
-        # INSERIR NO MYSQL
-        # ==========================================
 
         sql = """
         INSERT INTO agua (
@@ -141,15 +120,9 @@ def cadastrar_agua():
 
         print("\nConsumo de água cadastrado com sucesso!")
 
-        # ==========================================
-        # PERGUNTAR SE QUER OUTRO MÊS
-        # ==========================================
-
         while True:
 
-            continuar = input(
-                "\nDeseja cadastrar outro mês? (s/n): "
-            ).lower()
+            continuar = input("\nDeseja cadastrar outro mês? (s/n): ").lower()
 
             if continuar == "s":
                 break
@@ -171,9 +144,6 @@ def cadastrar_energia():
     conexao = conectar()
     cursor = conexao.cursor()
 
-    # ==========================================
-    # ID DA RESIDÊNCIA
-    # ==========================================
     while True:
 
         fk_id_residencia = input("Digite o ID da residência '0-Para sair': ")
@@ -194,11 +164,6 @@ def cadastrar_energia():
 
         print("Essa residência não existe.")
 
-
-
-    # ==========================================
-    # MÊS
-    # ==========================================
     while True:
 
             while True:
@@ -214,10 +179,6 @@ def cadastrar_energia():
 
                 print("Digite um mês válido.")
 
-    # ==========================================
-    # ANO
-    # ==========================================
-
             while True:
 
                 ano = input("Digite o ano: ")
@@ -230,10 +191,6 @@ def cadastrar_energia():
                         break
 
                 print("Digite um ano válido.")
-
-                # ==========================================
-                # VERIFICAR SE O MÊS JÁ EXISTE
-                # ==========================================
 
                 sql = """
                 SELECT id_energia
@@ -254,13 +211,9 @@ def cadastrar_energia():
                     print("Esse mês já possui dados cadastrados.")
                     continue
 
-        
-        # PEGAR ENERGIA
             while True:
 
-                kwh = input(
-                    "Digite a quantidade de energia usada em kWh: "
-                )
+                kwh = input("Digite a quantidade de energia usada em kWh: ")
 
                 if validar_decimal(kwh):
 
@@ -285,10 +238,6 @@ def cadastrar_energia():
                         break
 
                 print("Digite um preço válido.")
-
-    # ==========================================
-    # INSERIR NO MYSQL
-    # ==========================================
 
             sql = """
             INSERT INTO energia (
@@ -339,10 +288,6 @@ def cadastrar_lixo():
     conexao = conectar()
     cursor = conexao.cursor()
 
-    # ==========================================
-    # ID DA RESIDÊNCIA
-    # ==========================================
-
     while True:
 
         fk_id_residencia = input("Digite o ID da residência '0-Para sair': ")
@@ -364,10 +309,6 @@ def cadastrar_lixo():
   
     while True:
 
-        # ==========================================
-        # MÊS
-        # ==========================================
-
         while True:
 
             mes = input("Digite o mês (1-12): ")
@@ -380,10 +321,6 @@ def cadastrar_lixo():
 
             print("Digite um mês válido.")
         
-        # ==========================================
-        # ANO
-        # ==========================================
-
         while True:
 
             ano = input("Digite o ano: ")
@@ -414,13 +351,9 @@ def cadastrar_lixo():
             print("Esse mês já possui dados cadastrados.")
             continue
 
-        
-        # pegar quantidade de lixo
         while True:
 
-            quantidade = input(
-                "Digite a quantidade de lixo produzida em kg: "
-            )
+            quantidade = input("Digite a quantidade de lixo produzida em kg: ")
 
             if validar_decimal(quantidade):
 
@@ -430,10 +363,6 @@ def cadastrar_lixo():
                     break
 
             print("Digite uma quantidade válida maior que 0.")
-
-        # ==========================================
-        # INSERIR NO MYSQL
-        # ==========================================
 
         sql = """
         INSERT INTO lixo (
@@ -475,4 +404,3 @@ def cadastrar_lixo():
         
             else:
                 print("Digite apenas S ou N.")
-        

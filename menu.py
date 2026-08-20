@@ -28,10 +28,24 @@ def menu():
             cadastro_usuario()
         elif opcao == "2":
             cadastrar_residencia()
+            
         elif opcao == "3":
-            cadastrar_agua()
-            cadastrar_energia()
-            cadastrar_lixo()
+            print("1 - Cadastrar consumo de aguá")
+            print("2 - Cadastrar consumo de energia")
+            print("3 - Cadastrar lixo produzido")
+            print("0 - Para sair")
+            opcao2 = input("Cadastrar qual consumo: ")
+            if opcao2 == "1":
+                cadastrar_agua()
+            elif opcao2 == "2":
+                cadastrar_energia()
+            elif opcao2 == "3":
+                cadastrar_lixo()
+            elif opcao2 == "0":
+                print("Voltado...")
+            else:
+                print("Opção invalida")
+
         elif opcao == "4":
             Analisar()
         elif opcao == "5":
