@@ -12,8 +12,11 @@ def cadastrar_agua():
 
     while True:
 
-        fk_id_residencia = input("Digite o ID da residência: ")
+        fk_id_residencia = input("Digite o ID da residência '0-Para sair': ")
 
+        if fk_id_residencia == "0":
+                    print("Voltado...")
+                    return False
         if not validar_inteiro(fk_id_residencia):
             print("Digite um ID válido.")
             continue
@@ -173,7 +176,11 @@ def cadastrar_energia():
     # ==========================================
     while True:
 
-        fk_id_residencia = input("Digite o ID da residência: ")
+        fk_id_residencia = input("Digite o ID da residência '0-Para sair': ")
+       
+        if fk_id_residencia == "0":
+            print("Voltado...")
+            return False
 
         if not validar_inteiro(fk_id_residencia):
             print("Digite um ID válido.")
@@ -338,9 +345,11 @@ def cadastrar_lixo():
 
     while True:
 
-        fk_id_residencia = input(
-            "Digite o ID da residência: "
-        )
+        fk_id_residencia = input("Digite o ID da residência '0-Para sair': ")
+        
+        if fk_id_residencia == "0":
+            print("Voltado...")
+            return False
 
         if not validar_inteiro(fk_id_residencia):
             print("Digite um ID válido.")

@@ -13,9 +13,12 @@ def cadastro_usuario():
 
     while True:
 
-        nome = input("Digite o nome do usuário: ")
+        nome = input("Digite o nome do usuário '0-Para Sair': ")
 
-        if vali_txt(nome):
+        if nome == "0":
+            print("Voltado...")
+            return False
+        elif vali_txt(nome):
             break
 
         print("Digite um nome válido.")
@@ -70,9 +73,12 @@ def cadastrar_residencia():
     while True:
 
         usuario_id = input(
-            "Digite o ID do usuário proprietário da residência: "
+            "Digite o ID do usuário proprietário da residência '0-Para sair': "
         )
 
+        if usuario_id == "0":
+                    print("Voltado...")
+                    return False
         if not validar_inteiro(usuario_id):
             print("Digite um ID válido.")
             continue
